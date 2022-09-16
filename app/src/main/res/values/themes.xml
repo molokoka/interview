@@ -1,0 +1,21 @@
+<resources>
+
+  <style name="Platform.Theme.Yope" parent="android:ThemeOverlay.Material.Dark"/>
+
+  <style name="Base.Theme.Yope" parent="Platform.Theme.Yope">
+    <item name="android:windowActionModeOverlay">true</item>
+    <item name="android:navigationBarColor">@android:color/black</item>
+  </style>
+
+  <style name="Theme.Yope" parent="Base.Theme.Yope">
+  </style>
+
+  <style name="Theme.Yope.NoActionBar">
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
+
+  <style name="Theme.Yope.Immerse" parent="Theme.Yope.NoActionBar">
+    <item name="android:statusBarColor">@android:color/black</item>
+  </style>
+</resources>

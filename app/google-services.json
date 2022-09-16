@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "444803379044",
+    "project_id": "interview-ef788",
+    "storage_bucket": "interview-ef788.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444803379044:android:d1d002e5531b49431ed471",
+        "android_client_info": {
+          "package_name": "app.yope.interview.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444803379044-7b4ikqf10vbkc7gcfae3b4lenvcfq3o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXi528cNeIbIdQ-k2HZgvmMt7v3LQuYMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444803379044-7b4ikqf10vbkc7gcfae3b4lenvcfq3o3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

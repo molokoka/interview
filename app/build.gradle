@@ -1,0 +1,163 @@
+import app.yope.interview.buildSrc.Libs
+
+plugins {
+  id 'com.android.application'
+  id 'kotlin-parcelize'
+
+  id 'kotlin-android'
+  id 'kotlin-kapt'
+  id 'kotlinx-serialization'
+
+  id 'idea'
+}
+
+kapt {
+  correctErrorTypes = true
+  useBuildCache = true
+}
+
+android {
+
+  compileSdkVersion 32
+  defaultConfig {
+    applicationId "app.yope.interview"
+    minSdkVersion 26
+    targetSdkVersion 32
+    versionCode 1
+    versionName "1"
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    manifestPlaceholders.appName = "@string/app_name" // set application name
+  }
+
+  signingConfigs {
+    debug {
+      storeFile rootProject.file("debug-keystore.jks")
+      storePassword "password0"
+      keyAlias "key0"
+      keyPassword "password0"
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+
+  buildFeatures {
+    compose true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion Libs.AndroidX.Compose.version
+  }
+
+  testOptions {
+    unitTests {
+      includeAndroidResources = true
+    }
+  }
+  packagingOptions {
+    jniLibs {
+      excludes += ['META-INF/proguard/*']
+    }
+    resources {
+      excludes += [
+          // Exclude AndroidX version files
+          'META-INF/*.version',
+          // Exclude consumer proguard files
+          'META-INF/proguard/*',
+          // Exclude the Firebase/Fabric/other random properties files
+          '/*.properties',
+          'fabric/*.properties',
+          'META-INF/*.properties'
+      ]
+    }
+  }
+
+  buildTypes {
+    debug {
+      signingConfig signingConfigs.debug
+      versionNameSuffix "-debug"
+      applicationIdSuffix ".debug"
+      manifestPlaceholders.appName = "yope-${defaultConfig.versionName}"
+    }
+  }
+
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.freeCompilerArgs +=
+        ["-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=compatibility"]
+    kotlinOptions.jvmTarget = "11"
+  }
+}
+
+dependencies {
+  implementation Libs.Kotlin.stdlib
+  implementation Libs.Coroutines.android
+
+  implementation Libs.timber
+  debugImplementation Libs.leakCanary
+
+  implementation Libs.exoplayer
+
+  implementation Libs.snapper
+  implementation Libs.dataStore
+
+  implementation platform(Libs.Okhttp.bom)
+  implementation Libs.Okhttp.okhttp
+  implementation Libs.Okhttp.loggingInterceptor
+
+  implementation Libs.Retrofit.retrofit
+  implementation Libs.Retrofit.converter
+  implementation Libs.Moshi.moshi
+  kapt Libs.Moshi.codeGen
+
+  implementation platform(Libs.Firebase.bom)
+  implementation Libs.Firebase.analytics
+  implementation Libs.Firebase.crashlytics
+  implementation Libs.Firebase.storage
+  implementation Libs.Firebase.authentication
+  implementation Libs.Firebase.firestoreDatabase
+  implementation Libs.Firebase.realtimeDatabase
+  implementation Libs.Firebase.coroutineExt
+
+  implementation Libs.Dagger.dagger
+  kapt Libs.Dagger.daggerCompiler
+
+  implementation Libs.AndroidX.coreKtx
+  implementation Libs.AndroidX.Lifecycle.runtime
+  implementation Libs.AndroidX.Activity.activityCompose
+  implementation Libs.AndroidX.ConstrainLayout.compose
+
+  implementation Libs.AndroidX.Compose.util
+  implementation Libs.AndroidX.Compose.foundation
+  implementation Libs.AndroidX.Compose.layout
+  implementation Libs.AndroidX.Compose.material
+  implementation Libs.AndroidX.Compose.runtime
+  implementation Libs.AndroidX.Compose.Tooling.preview
+  debugImplementation Libs.AndroidX.Compose.Tooling.tooling
+
+  implementation Libs.Accompanist.pager
+  implementation Libs.Accompanist.permissions
+  implementation Libs.Accompanist.swipeRefresh
+
+  implementation Libs.Coil.compose
+  implementation Libs.Coil.gif
+
+  testImplementation Libs.Kotlin.reflection
+  testImplementation Libs.junit
+  testImplementation Libs.KoTest.koTestRunner
+  testImplementation Libs.KoTest.koTestAssertions
+
+  androidTestImplementation Libs.AndroidX.Test.Ext.junit
+  androidTestImplementation Libs.AndroidX.Test.Ext.junitKotlin
+  androidTestImplementation Libs.AndroidX.Test.core
+  androidTestImplementation Libs.AndroidX.Test.rules
+  androidTestImplementation Libs.AndroidX.Test.espressoCore
+}
+
+if (file("google-services.json").exists()) {
+  apply plugin: 'com.google.gms.google-services'
+  apply plugin: 'com.google.firebase.crashlytics'
+}
