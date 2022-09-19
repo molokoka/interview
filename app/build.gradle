@@ -101,7 +101,6 @@ dependencies {
 
   implementation Libs.exoplayer
 
-  implementation Libs.snapper
   implementation Libs.dataStore
 
   implementation platform(Libs.Okhttp.bom)
